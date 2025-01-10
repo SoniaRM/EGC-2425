@@ -48,6 +48,15 @@ def test_login_unsuccessful_bad_password(test_client):
 
     test_client.get("/logout", follow_redirects=True)
 
+def test_login_unsuccessfull_empty(test_client):
+    response = test_client.post(
+        "/login", data=dict(email="", password=""), follow_redirects=True
+    )
+
+    assert response.request.path == url_for("auth.login"), "Login was unsuccessful"
+
+    test_client.get("/logout", follow_redirects=True)
+
 
 def test_signup_user_no_name(test_client):
     response = test_client.post(
